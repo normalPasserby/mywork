@@ -6,6 +6,7 @@
 		"activeTab",
 		"tabs",
 		"alarms",
+		"declarativeContent",
 		"notifications", 
 		"storage"
 	],

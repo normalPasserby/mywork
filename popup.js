@@ -1,32 +1,21 @@
-  let changeColor = document.getElementById('changeColor');
-
-  chrome.storage.sync.get('color', function(data) {
-    changeColor.style.backgroundColor = data.color;
-    changeColor.setAttribute('value', data.color);
-  });
-  
-  changeColor.onclick = function(element) {
-    let color = element.target.value;
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.executeScript(
-          tabs[0].id,
-          {code: 'document.body.style.backgroundColor = "' + color + '";'});
-    });
-  };
-  
-  
 
 //=======================display===========================================================
 
-//chrome.storage.sync.get('control_button', function(data) {
-//	let ibool = data.control_button;
-//	document.getElementById('state').textContent = "control " + ibool;
-//});
+chrome.storage.sync.get('control_button', function(data) {
+	let ibool = data.control_button;
+	document.getElementById('state').textContent = "ctl " + ibool;
+});
 
-let fiveMin = document.getElementById('fiveMin');
-fiveMin.onclick = function(element) {
+//==========button
+document.getElementById('fiveMin').onclick = function(element) {
 	chrome.storage.sync.set({control_button: false}, function() {
-	    console.log("fiveMin");
+	    
+	    var status = document.getElementById('status');
+	    status.textContent = 'fiveMin!';
+	    setTimeout(function() {
+		      status.textContent = '';
+		    }, 1000);
+	    });
 	    
 		var alarmName = 'remindme';
 		chrome.alarms.create(alarmName, {delayInMinutes: 5});
@@ -36,22 +25,13 @@ fiveMin.onclick = function(element) {
         iconUrl: 'images/get_started16.png',
         title: 'fiveMin',
         message: 'fiveMin!'
-    }, function(notificationId) {});
-		
-		
-		var status = document.getElementById('status');
-	    status.textContent = 'fiveMin!';
-	    setTimeout(function() {
-		      status.textContent = '';
-		    }, 1000);
-	  });
+        }, function(notificationId) {});
 };
 
 
-let fiveMin = document.getElementById('tMin');
-fiveMin.onclick = function(element) {
+document.getElementById('tMin').onclick = function(element) {
 	chrome.storage.sync.set({control_button: false}, function() {
-	    console.log("fiveMin");
+	    console.log("tMin");
 	    
 		var alarmName = 'remindme';
 		chrome.alarms.create(alarmName, {delayInMinutes: 30});
@@ -61,7 +41,19 @@ fiveMin.onclick = function(element) {
 	    setTimeout(function() {
 		      status.textContent = '';
 		    }, 1000);
-	  });
+	    });
+};
+
+
+document.getElementById('test').onclick = function(element) {
+
+		chrome.notifications.create('ddfsed', {
+        type: 'basic',
+        iconUrl: 'images/get_started16.png',
+        title: 'ddfedd',
+        message: 'ddfdedd!'
+        }, function(notificationId) {});
+
 };
 
   
