@@ -17,4 +17,70 @@ chrome.runtime.onInstalled.addListener(function() {
             actions: [new chrome.declarativeContent.ShowPageAction()]
       }]);
     });
+    
+    chrome.storage.sync.set({
+		control_button: true
+	}, function() {
+		console.log("control_button: true");
+	});
+    
+    
+    
 });
+
+
+
+// onupdated
+chrome.tabs.onUpdated.addListener(function(id, info, tab) {
+	function removeTabs() {
+		chrome.storage.sync.get({
+			option : [ "zhihu.com/", "twitter.com/", "youtube.com/",
+					"reddit.com/", "pinterest.com/", "vimeo.com/",
+					"plus.google", "tumblr.com/", "instagram.com/", "", "", "",
+					"", "", "", "", "", "", "", "" ]
+		}, function(items) {
+			var x;
+			for (x = 1; x <= 20; x++) {
+				if (items.option[x - 1] === "") {
+					continue;
+				}
+				if (tab.url.toLowerCase().indexOf(items.option[x - 1]) !== -1) {
+					chrome.tabs.remove(tab.id);
+				}
+			}
+		});
+	}
+
+	if (false) {
+		chrome.tabs.remove(tab.id);
+	}
+	
+	chrome.storage.sync.get({
+		control_button: true
+	}, function(items) {
+		if(items.control_button === true)
+			removeTabs(tab.id)
+	});
+});
+
+
+
+
+chrome.alarms.onAlarm.addListener(function() {
+  chrome.storage.sync.set({control_button: true}, function() {});
+      chrome.notifications.create('reminder', {
+        type: 'basic',
+        iconUrl: 'images/get_started16.png',
+        title: 'control on',
+        message: 'You have not visit some web now!'
+    }, function(notificationId) {});
+});
+
+
+
+
+
+
+
+
+
