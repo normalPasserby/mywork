@@ -83,3 +83,22 @@ close.onclick = function(element) {
 	    }, 1000);
 	  });
 };
+
+let open = document.getElementById('open');
+open.onclick = function(element) {
+	chrome.storage.sync.set({control_button: true}, function() {
+	    console.log("control_button: true");
+	    var status = document.getElementById('status');
+	    status.textContent = 'Open! Thank you.';
+	    setTimeout(function() {
+	      status.textContent = '';
+	    }, 1000);
+	  });
+};
+
+
+
+
+
+
+
